@@ -66,7 +66,7 @@ This creates the exchange called `my.first.exchange` and binds the queue called 
 ```
 This makes the MessageListenerService to listen on the queue `my.first.queue`. 
 
-***rabbitmq-context.xml
+###rabbitmq-context.xml
 ```
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
@@ -100,7 +100,14 @@ This makes the MessageListenerService to listen on the queue `my.first.queue`.
 </beans>
 ```
 
+### MessageListener
+`MessageListenerService` class implements the interface provided by spring called `org.springframework.amqp.core.MessageListener` and the method `onMessage` has to be defined (Here, the published message properties and body is been logged)
 
+### MessageSender
+`MessageSenderService` serves the prupose of publishing the message. It uses `org.springframework.amqp.core.AmqpTemplate` for converting and send the message.
+
+###References
+`https://keyholesoftware.com/2013/04/01/rabbitmq-with-spring-tutorial/`
 
 
 
