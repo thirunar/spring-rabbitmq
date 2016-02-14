@@ -102,10 +102,10 @@ This makes the MessageListenerService to listen on the queue `my.first.queue`.
 ```
 
 ### MessageListener
-`MessageListenerService` class implements the interface provided by spring called `org.springframework.amqp.core.MessageListener` and the method `onMessage` has to be defined (Here, the published message properties and body is been logged)
+`MessageListenerService` class implements the interface provided by spring called `org.springframework.amqp.core.MessageListener` and the method `onMessage` has to be defined (Here, the published message properties and body has been logged)
 
 ### MessageSender
-`MessageSenderService` serves the prupose of publishing the message. It uses `org.springframework.amqp.core.AmqpTemplate` for converting and send the message.
+`MessageSenderService` serves the purpose of publishing the message. It uses `org.springframework.amqp.core.AmqpTemplate` for converting and sending the message.
 
 ###References
 `https://keyholesoftware.com/2013/04/01/rabbitmq-with-spring-tutorial/`
