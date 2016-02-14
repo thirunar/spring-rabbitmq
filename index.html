@@ -43,11 +43,14 @@
 </code></pre>
 
 <h3>
-<a id="requirements" class="anchor" href="#requirements" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Requirements</h3>
+<a id="techonlogies-used" class="anchor" href="#techonlogies-used" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Techonlogies Used</h3>
 
 <ul>
 <li>RabbitMQ <code>https://www.rabbitmq.com/install-standalone-mac.html</code>
 </li>
+<li>Java </li>
+<li>Maven</li>
+<li>Spring Boot</li>
 </ul>
 
 <h3>
@@ -56,7 +59,97 @@
 <pre><code>mvn spring-boot:run
 </code></pre>
 
-<p>The spring boot application will start on port 8080. There is a rest endpoint <em>/message</em> which takes the message as a plain text and publishes to the message and there is a listener which listens the queue and logs the message published.</p>
+<p>This command will start the application on port 8080. There is a rest endpoint <em>/message</em> which takes the message as a plain text and publishes to the message and there is a listener which listens the queue and logs the published message in the console.</p>
+
+<h3>
+<a id="project-structure" class="anchor" href="#project-structure" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Project Structure</h3>
+
+<p>java
+    |_  com
+    |_ spring
+        |_ rabbitmq
+            |_ controller
+            |   |_ MessageController
+            |_ service
+                |_ MessageListenerService
+                |_ MessageSenderService
+            DemoApplication
+resources
+    |_ context.xml
+    |_ rabbitmq_context.xml</p>
+
+<p><code>MessageController</code> is the rest end point which consumes plain text and helps in publishing the messaging on the queue. The services helps in subcribing and publishing the message. <code>rabbitmq_context.xml</code> has the rabbitmq configuration. </p>
+
+<h3>
+<a id="configuring-rabbitmq" class="anchor" href="#configuring-rabbitmq" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Configuring RabbitMQ</h3>
+
+<pre><code>    &lt;rabbit:topic-exchange id="my.first.exchange" name="my.first.exchange"&gt;
+        &lt;rabbit:bindings&gt;
+            &lt;rabbit:binding queue="my.first.queue" pattern="my.#.*"/&gt;
+        &lt;/rabbit:bindings&gt;
+    &lt;/rabbit:topic-exchange&gt;
+</code></pre>
+
+<p>This creates the exchange called <code>my.first.exchange</code> and binds the queue called <code>my.first.queue</code>. The pattern is used for defining the routing key. This means, the queue will accept all the message with routing key starts with "my". </p>
+
+<pre><code>    &lt;bean id="messageListener" class="com.spring.rabbitmq.service.MessageListenerService" /&gt;
+
+    &lt;rabbit:listener-container connection-factory="connectionFactory"&gt;
+        &lt;rabbit:listener ref="messageListener" queues="my.first.queue" /&gt;
+    &lt;/rabbit:listener-container&gt;
+</code></pre>
+
+<p>This makes the MessageListenerService to listen on the queue <code>my.first.queue</code>. </p>
+
+<h3>
+<a id="rabbitmq-contextxml" class="anchor" href="#rabbitmq-contextxml" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>rabbitmq-context.xml</h3>
+
+<pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:rabbit="http://www.springframework.org/schema/rabbit"
+       xsi:schemaLocation="http://www.springframework.org/schema/rabbit
+           http://www.springframework.org/schema/rabbit/spring-rabbit.xsd
+           http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd"&gt;
+
+    &lt;rabbit:connection-factory id="connectionFactory" host="localhost" username="guest" password="guest" /&gt;
+
+    &lt;rabbit:admin connection-factory="connectionFactory" /&gt;
+
+    &lt;rabbit:template id="messageSender" connection-factory="connectionFactory"  exchange="my.first.exchange"/&gt;
+
+    &lt;rabbit:queue id="my.first.queue" name="my.first.queue" /&gt;
+
+    &lt;rabbit:topic-exchange id="my.first.exchange" name="my.first.exchange"&gt;
+        &lt;rabbit:bindings&gt;
+            &lt;rabbit:binding queue="my.first.queue" pattern="my.#.*"/&gt;
+        &lt;/rabbit:bindings&gt;
+    &lt;/rabbit:topic-exchange&gt;
+
+    &lt;bean id="messageListener" class="com.spring.rabbitmq.service.MessageListenerService" /&gt;
+
+    &lt;rabbit:listener-container connection-factory="connectionFactory"&gt;
+        &lt;rabbit:listener ref="messageListener" queues="my.first.queue" /&gt;
+    &lt;/rabbit:listener-container&gt;
+
+&lt;/beans&gt;
+</code></pre>
+
+<h3>
+<a id="messagelistener" class="anchor" href="#messagelistener" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>MessageListener</h3>
+
+<p><code>MessageListenerService</code> class implements the interface provided by spring called <code>org.springframework.amqp.core.MessageListener</code> and the method <code>onMessage</code> has to be defined (Here, the published message properties and body is been logged)</p>
+
+<h3>
+<a id="messagesender" class="anchor" href="#messagesender" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>MessageSender</h3>
+
+<p><code>MessageSenderService</code> serves the prupose of publishing the message. It uses <code>org.springframework.amqp.core.AmqpTemplate</code> for converting and send the message.</p>
+
+<h3>
+<a id="references" class="anchor" href="#references" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>References</h3>
+
+<p><code>https://keyholesoftware.com/2013/04/01/rabbitmq-with-spring-tutorial/</code></p>
 
       <footer class="site-footer">
         <span class="site-footer-owner"><a href="https://github.com/thirunar/spring-rabbitmq">Spring and RabbitMQ Integration</a> is maintained by <a href="https://github.com/thirunar">thirunar</a>.</span>
