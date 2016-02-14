@@ -64,7 +64,7 @@
 <h3>
 <a id="project-structure" class="anchor" href="#project-structure" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Project Structure</h3>
 
-<p>java
+<pre><code>java
     |_  com
     |_ spring
         |_ rabbitmq
@@ -76,7 +76,8 @@
             DemoApplication
 resources
     |_ context.xml
-    |_ rabbitmq_context.xml</p>
+    |_ rabbitmq_context.xml
+</code></pre>
 
 <p><code>MessageController</code> is the rest end point which consumes plain text and helps in publishing the messaging on the queue. The services helps in subcribing and publishing the message. <code>rabbitmq_context.xml</code> has the rabbitmq configuration. </p>
 
