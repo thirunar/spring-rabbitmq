@@ -31,6 +31,7 @@ mvn spring-boot:run
 This command will start the application on port 8080. There is a rest endpoint _/message_ which takes the message as a plain text and publishes to the message and there is a listener which listens the queue and logs the published message in the console.
 
 ### Project Structure
+```
 java
     |_	com
 	|_ spring
@@ -44,7 +45,7 @@ java
 resources
 	|_ context.xml
 	|_ rabbitmq_context.xml
-	
+```	
 `MessageController` is the rest end point which consumes plain text and helps in publishing the messaging on the queue. The services helps in subcribing and publishing the message. `rabbitmq_context.xml` has the rabbitmq configuration. 
 
 ### Configuring RabbitMQ
