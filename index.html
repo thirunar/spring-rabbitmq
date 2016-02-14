@@ -79,7 +79,7 @@ resources
     |_ rabbitmq_context.xml
 </code></pre>
 
-<p><code>MessageController</code> is the rest end point which consumes plain text and helps in publishing the messaging on the queue. The services helps in subcribing and publishing the message. <code>rabbitmq_context.xml</code> has the rabbitmq configuration. </p>
+<p><code>MessageController</code> is the rest end point which consumes plain text and helps in publishing the messaging on the queue. The services helps in subscribing and publishing of the messages. <code>rabbitmq_context.xml</code> has the rabbitmq configuration. </p>
 
 <h3>
 <a id="configuring-rabbitmq" class="anchor" href="#configuring-rabbitmq" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Configuring RabbitMQ</h3>
@@ -140,12 +140,12 @@ resources
 <h3>
 <a id="messagelistener" class="anchor" href="#messagelistener" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>MessageListener</h3>
 
-<p><code>MessageListenerService</code> class implements the interface provided by spring called <code>org.springframework.amqp.core.MessageListener</code> and the method <code>onMessage</code> has to be defined (Here, the published message properties and body is been logged)</p>
+<p><code>MessageListenerService</code> class implements the interface provided by spring called <code>org.springframework.amqp.core.MessageListener</code> and the method <code>onMessage</code> has to be defined (Here, the published message properties and body has been logged)</p>
 
 <h3>
 <a id="messagesender" class="anchor" href="#messagesender" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>MessageSender</h3>
 
-<p><code>MessageSenderService</code> serves the prupose of publishing the message. It uses <code>org.springframework.amqp.core.AmqpTemplate</code> for converting and send the message.</p>
+<p><code>MessageSenderService</code> serves the purpose of publishing the message. It uses <code>org.springframework.amqp.core.AmqpTemplate</code> for converting and sending the message.</p>
 
 <h3>
 <a id="references" class="anchor" href="#references" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>References</h3>
