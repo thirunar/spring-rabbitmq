@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:rabbit="http://www.springframework.org/schema/rabbit"
+       xsi:schemaLocation="http://www.springframework.org/schema/rabbit
+           http://www.springframework.org/schema/rabbit/spring-rabbit.xsd
+           http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <rabbit:connection-factory id="connectionFactory" host="localhost" username="guest" password="guest" />
+
+    <rabbit:admin connection-factory="connectionFactory" />
+
+    <rabbit:template id="messageSender" connection-factory="connectionFactory"  exchange="my.first.exchange"/>
+
+    <rabbit:queue id="my.first.queue" name="my.first.queue" />
+
+    <rabbit:topic-exchange id="my.first.exchange" name="my.first.exchange">
+        <rabbit:bindings>
+            <rabbit:binding queue="my.first.queue" pattern="my.#.*"/>
+        </rabbit:bindings>
+    </rabbit:topic-exchange>
+
+    <bean id="messageListener" class="com.spring.rabbitmq.service.MessageListenerService" />
+
+    <rabbit:listener-container connection-factory="connectionFactory">
+        <rabbit:listener ref="messageListener" queues="my.first.queue" />
+    </rabbit:listener-container>
+
+</beans>
