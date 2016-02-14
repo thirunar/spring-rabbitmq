@@ -3,6 +3,11 @@ This example walks you through the integration of Spring with RabbitMQ AMQP serv
 
 AMQP (Advanced Message Queuing Protocol) is an open standard application layer protocol for message-oriented middleware. The defining features of AMQP are message orientation, queuing, routing (including point-to-point and publish-and-subscribe), reliability and security. RabbitMQ is an open source message broker that supports the AMQP standard. 
 
+### Techonlogies Used
+* RabbitMQ `https://www.rabbitmq.com/install-standalone-mac.html`
+* Java 
+* Maven
+* Spring Boot
 
 ### Dependencies
 ```
@@ -18,11 +23,6 @@ AMQP (Advanced Message Queuing Protocol) is an open standard application layer p
 			<version>2.1.3.RELEASE</version>
 		</dependency>
 ```
-### Techonlogies Used
-* RabbitMQ `https://www.rabbitmq.com/install-standalone-mac.html`
-* Java 
-* Maven
-* Spring Boot
 
 ### Steps to Run
 ```
