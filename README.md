@@ -46,7 +46,7 @@ resources
 	|_ context.xml
 	|_ rabbitmq_context.xml
 ```	
-`MessageController` is the rest end point which consumes plain text and helps in publishing the messaging on the queue. The services helps in subcribing and publishing the message. `rabbitmq_context.xml` has the rabbitmq configuration. 
+`MessageController` is the rest end point which consumes plain text and helps in publishing the messaging on the queue. The services helps in subscribing and publishing of the messages. `rabbitmq_context.xml` has the rabbitmq configuration. 
 
 ### Configuring RabbitMQ
 ```
